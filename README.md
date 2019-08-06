@@ -3,5 +3,5 @@
 
 **Commands**  
 -First Video  
-       1.`php artisan preset none`  
-       2.`php artisan preset vue`  
+  1.`php artisan preset none`  
+  2.`php artisan preset vue`  
