@@ -11,16 +11,12 @@
         <h1 class="text-white text-3xl pt-8">Oh no!</h1>
         <h2 class="text-blue-300">Enter your email to reset password</h2>
     
-
         <form method="POST" action="{{ route('password.email') }}" class="pt-8">
             @csrf
-
             <div class="realative">
                 <label for="email" class="uppercase text-blue-500 text-xs font-bold absolute pl-3 pt-2">email</label>
-
                 <div class="col-md-6">
                     <input id="email" type="email" class="pt-8 w-full rounded p-3 bg-blue-800 text-gray-100 outline-none focus:bg-blue-700" name="email" value="{{ old('email') }}" autocomplete="email" autofocus placeholder="your@email.com">
-
                     @error('email')
                         <span class="text-red-600 text-sm" role="alert">
                             <strong>{{ $message }}</strong>
@@ -28,7 +24,6 @@
                     @enderror
                 </div>
             </div>
-
             <div class="pt-8">
                 <button type="submit" class="uppercase bg-gray-400 py-2 px-3 text-left w-full rounded text-blue-800 font-bold">
                     Send Reset Email
