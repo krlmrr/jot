@@ -57,6 +57,9 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "test" :[
+            "clear && /vendor/bin/phpunit --filter a_contact_can_be_added"
         ]
     }
 }
