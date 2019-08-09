@@ -13,7 +13,18 @@ class ContactsTest extends TestCase
     /** @test */
     public function a_contact_can_be_added(){
         $this->withoutExceptionHandling();
-        $this->post('/api/contacts', ['name' => 'Test Name']);
-        $this->assertCount(1, Contact::all());
+        $this->post('/api/contacts', [
+            'name' => 'Test Name',
+            'email' => 'demo@apple.com',
+            'birthday' => "07/25/1989",
+            'company' => 'ABC Company'
+        ]);
+
+        $contact = Contact::first();
+
+        $this->assertEquals('Test Name', $contact->name);
+        $this->assertEquals('demo@apple.com', $contact->email);
+        $this->assertEquals('07/25/1989', $contact->birthday);
+        $this->assertEquals('ABC Company', $contact->company);
     }
 }
