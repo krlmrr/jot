@@ -34814,8 +34814,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\karlp\Desktop\Code\vue-laravel\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\karlp\Desktop\Code\vue-laravel\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! c:\Users\karlp\Desktop\Code\vue-laravel\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! c:\Users\karlp\Desktop\Code\vue-laravel\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
