@@ -17,4 +17,8 @@ class ContactsController extends Controller
 
         Contact::create($data);
     }
+
+    public function show(Contact $contact){
+        return $contact;
+    }
 }
