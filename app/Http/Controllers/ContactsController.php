@@ -8,17 +8,23 @@ use Illuminate\Http\Request;
 class ContactsController extends Controller
 {
     public function store(){
-        $data = request()->validate([
+        Contact::create($this->validateData());
+    }
+
+    public function show(Contact $contact){
+        return $contact;
+    }
+
+    public function update(Contact $contact){
+        $contact->update($this->validateData());
+    }
+
+    private function validateData(){
+        return $data = request()->validate([
             'name' => 'required',
             'email' => 'required|email',
             'birthday' => 'required',
             'company' => 'required',
         ]);
-
-        Contact::create($data);
-    }
-
-    public function show(Contact $contact){
-        return $contact;
     }
 }

@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class ContactsTest extends TestCase
 {
     use RefreshDatabase;
-    
+
     /** @test */
     public function fields_are_required(){
         collect(['name', 'email', 'birthday', 'company'])
@@ -21,14 +21,14 @@ class ContactsTest extends TestCase
             $this->assertCount(0, Contact::all());
         });
     }
-    
+
     /** @test */
     public function email_must_be_valid_email(){
         $response = $this->post('/api/contacts', array_merge($this->data(), ['email' => 'NOT AN EMAIL']));
         $response->assertSessionHasErrors('email');
         $this->assertCount(0, Contact::all());
     }
-    
+
     /** @test */
     public function birthdays_are_stored_as_dates(){
         $response = $this->post('/api/contacts', array_merge($this->data()));
@@ -53,10 +53,23 @@ class ContactsTest extends TestCase
         ]);
     }
 
+    /** @test */
+    public function a_contact_can_be_patched(){
+        $contact = factory(Contact::class)->create();
+
+        $response = $this->patch('/api/contacts/' . $contact->id, $this->data());
+        $contact = $contact->fresh();
+
+        $this->assertEquals('Test Name', $contact->name);
+        $this->assertEquals('test@email.com', $contact->email);
+        $this->assertEquals('07/25/1989', $contact->birthday->format('m/d/Y'));
+        $this->assertEquals('ABC Company', $contact->company);
+    }
+
     private function data(){
         return [
             'name' => 'Test Name',
-            'email' => 'demo@apple.com',
+            'email' => 'test@email.com',
             'birthday' => "07/25/1989",
             'company' => 'ABC Company'
         ];
