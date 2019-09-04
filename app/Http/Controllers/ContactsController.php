@@ -7,14 +7,18 @@ use Illuminate\Http\Request;
 
 class ContactsController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         return request()->user()->contacts;
     }
-    public function store(){
-        Contact::create($this->validateData());
+
+    public function store()
+    {
+        request()->user()->contacts()->create($this->validateData());
     }
 
-    public function show(Contact $contact){
+    public function show(Contact $contact)
+    {
         if(request()->user()->isNot($contact->user)){
             return response([], 403);
         }
@@ -22,15 +26,26 @@ class ContactsController extends Controller
         return $contact;
     }
 
-    public function update(Contact $contact){
+    public function update(Contact $contact)
+    {
+        if(request()->user()->isNot($contact->user)){
+            return response([], 403);
+        }
+
         $contact->update($this->validateData());
     }
 
-    public function destroy(Contact $contact){
+    public function destroy(Contact $contact)
+    {
+        if(request()->user()->isNot($contact->user)){
+            return response([], 403);
+        }
+        
         $contact->delete();
     }
 
-    private function validateData(){
+    private function validateData()
+    {
         return $data = request()->validate([
             'name' => 'required',
             'email' => 'required|email',
