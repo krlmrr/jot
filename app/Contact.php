@@ -10,7 +10,13 @@ class Contact extends Model{
 
     protected $dates = ['birthday'];
 
-    public function setBirthdayAttribute($birthday){
+    public function path()
+    {
+        return url('/contacts/'. $this->id);
+    }
+
+    public function setBirthdayAttribute($birthday)
+    {
         $this->attributes['birthday'] = Carbon::parse($birthday);
     }
     public function user()
