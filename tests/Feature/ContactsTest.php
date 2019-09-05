@@ -22,22 +22,26 @@ class ContactsTest extends TestCase
     }
     
     /** @test */
-    public function a_list_of_contacts_can_be_fetched_for_the_auth_user()
+    public function a_list_of_contacts_can_be_fetched_for_the_authenticated_user()
     {
         $user = factory(User::class)->create();
         $anotherUser = factory(User::class)->create();
-        
-        $contact = factory(Contact::class)->create(['user_id'=> $user->id]);
-        $anotherContact = factory(Contact::class)->create(['user_id'=> $anotherUser->id]);
 
-        $response = $this->get('/api/contacts?api_token='.$user->api_token);
+        $contact = factory(Contact::class)->create(['user_id' => $user->id]);
+        $anotherContact = factory(Contact::class)->create(['user_id' => $anotherUser->id]);
+
+        $response = $this->get('/api/contacts?api_token=' . $user->api_token);
 
         $response->assertJsonCount(1)
             ->assertJson([
                 'data' => [
-                    ['contact_id'=> $contact->id]
+                    [
+                        "data" => [
+                            'contact_id' => $contact->id
+                        ]
+                    ]
                 ]
-            ]);   
+            ]);
     }
 
     /** @test */
@@ -68,7 +72,7 @@ class ContactsTest extends TestCase
                 'contact_id' => $contact->id,
             ],
             'links' => [
-                'self' => url('/contacts/' . $contact->id)
+                'self' => $contact->path()
             ]
         ]);
     }
@@ -143,6 +147,16 @@ class ContactsTest extends TestCase
         $this->assertEquals('test@email.com', $contact->email);
         $this->assertEquals('07/25/1989', $contact->birthday->format('m/d/Y'));
         $this->assertEquals('ABC Company', $contact->company);
+
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertJson([
+            'data' => [
+                'contact_id' => $contact->id
+            ],
+            'links' => [
+                'self' => $contact->path()
+            ]
+        ]);
     }
 
     /** @test */
@@ -165,6 +179,7 @@ class ContactsTest extends TestCase
             ['api_token' => $this->user->api_token]);
 
         $this->assertCount(0, Contact::all());
+        $response->assertStatus(Response::HTTP_NO_CONTENT);
     }
 
     /** @test */
