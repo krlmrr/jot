@@ -1910,6 +1910,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   created: function created() {
     var _this = this;
 
+    this.title = this.$route.meta.title;
     window.axios.interceptors.request.use(function (config) {
       if (config.method === 'get') {
         config.url = config.url + '?api_token=' + _this.user.api_token;
@@ -1921,6 +1922,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       return config;
     });
+  },
+  data: function data() {
+    return {
+      title: ''
+    };
+  },
+  watch: {
+    $route: function $route(to, from) {
+      this.title = to.meta.title;
+    },
+    title: function title() {
+      document.title = this.title + ' | Jot';
+    }
   }
 });
 
@@ -21046,7 +21060,13 @@ var render = function() {
                 "h-16 px-6 border-b border-gray-400 flex items-center justify-between"
             },
             [
-              _vm._m(0),
+              _c("div", [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.title) +
+                    "\n                "
+                )
+              ]),
               _vm._v(" "),
               _c(
                 "div",
@@ -21072,14 +21092,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("p", [_vm._v("Latest Contacts")])])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -37688,22 +37701,40 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 /* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   routes: [{
     path: '/',
-    component: _components_ExampleComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    component: _components_ExampleComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    meta: {
+      title: 'Welcome'
+    }
   }, {
     path: '/contacts',
-    component: _views_ContactsIndex_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    component: _views_ContactsIndex_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    meta: {
+      title: 'Contacts'
+    }
   }, {
     path: '/contacts/create',
-    component: _views_ContactsCreate_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+    component: _views_ContactsCreate_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+    meta: {
+      title: 'Add New Contact'
+    }
   }, {
     path: '/contacts/:id',
-    component: _views_ContactsShow_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+    component: _views_ContactsShow_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+    meta: {
+      title: 'Contact Details'
+    }
   }, {
     path: '/contacts/:id/edit',
-    component: _views_ContactsEdit_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
+    component: _views_ContactsEdit_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+    meta: {
+      title: 'Edit Contact'
+    }
   }, {
     path: '/birthdays',
-    component: _views_BirthdaysIndex_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
+    component: _views_BirthdaysIndex_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
+    meta: {
+      title: 'This Month\'s Birthdays'
+    }
   }],
   mode: 'history'
 }));
