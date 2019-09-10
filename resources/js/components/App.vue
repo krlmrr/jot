@@ -52,7 +52,8 @@
 
 <script>
     import UserCircle from './UserCircle';
-    import SearchBar from './SearchBar';
+    import SearchBar from '../components/SearchBar';
+
     export default {
         name: "App",
 
@@ -61,7 +62,8 @@
         ],
 
         components: {
-            UserCircle, SearchBar
+            UserCircle, 
+            SearchBar
         },
 
         created() {

@@ -1839,7 +1839,7 @@ module.exports = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _UserCircle__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UserCircle */ "./resources/js/components/UserCircle.vue");
-/* harmony import */ var _SearchBar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SearchBar */ "./resources/js/components/SearchBar.vue");
+/* harmony import */ var _components_SearchBar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/SearchBar */ "./resources/js/components/SearchBar.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -1905,7 +1905,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   props: ['user'],
   components: {
     UserCircle: _UserCircle__WEBPACK_IMPORTED_MODULE_0__["default"],
-    SearchBar: _SearchBar__WEBPACK_IMPORTED_MODULE_1__["default"]
+    SearchBar: _components_SearchBar__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   created: function created() {
     var _this = this;
@@ -2206,6 +2206,27 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _UserCircle__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UserCircle */ "./resources/js/components/UserCircle.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2218,15 +2239,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'SearchBar',
+  name: "SearchBar",
+  components: {
+    UserCircle: _UserCircle__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   data: function data() {
     return {
-      searchTerm: ''
+      searchTerm: '',
+      focus: false,
+      results: []
     };
   },
   methods: {
     search: lodash__WEBPACK_IMPORTED_MODULE_0___default.a.debounce(function (e) {
+      var _this = this;
+
       if (this.searchTerm.length < 3) {
         return;
       }
@@ -2234,7 +2263,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/api/search', {
         searchTerm: this.searchTerm
       }).then(function (response) {
-        console.log(response.data);
+        _this.results = response.data.data;
       })["catch"](function (error) {
         console.log(error.response);
       });
@@ -21440,49 +21469,129 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "relative" }, [
-    _c("div", { staticClass: "absolute" }, [
-      _c(
-        "svg",
-        { staticClass: "w-5 h-5 mt-2 ml-2", attrs: { viewBox: "0 0 24 24" } },
-        [
-          _c("path", {
-            attrs: {
-              "fill-rule": "evenodd",
-              d:
-                "M20.2 18.1l-1.4 1.3-5.5-5.2 1.4-1.3 5.5 5.2zM7.5 12c-2.7 0-4.9-2.1-4.9-4.6s2.2-4.6 4.9-4.6 4.9 2.1 4.9 4.6S10.2 12 7.5 12zM7.5.8C3.7.8.7 3.7.7 7.3s3.1 6.5 6.8 6.5c3.8 0 6.8-2.9 6.8-6.5S11.3.8 7.5.8z",
-              "clip-rule": "evenodd"
+  return _c("div", [
+    _vm.focus
+      ? _c("div", {
+          staticClass:
+            "bg-black opacity-0 absolute top-0 right-0 bottom-0 left-0 z-10",
+          on: {
+            click: function($event) {
+              _vm.focus = false
             }
-          })
-        ]
-      )
-    ]),
+          }
+        })
+      : _vm._e(),
     _vm._v(" "),
-    _c("input", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.searchTerm,
-          expression: "searchTerm"
+    _c("div", { staticClass: "relative z-10" }, [
+      _c("div", { staticClass: "absolute" }, [
+        _c(
+          "svg",
+          { staticClass: "w-5 h-5 mt-2 ml-2", attrs: { viewBox: "0 0 24 24" } },
+          [
+            _c("path", {
+              attrs: {
+                "fill-rule": "evenodd",
+                d:
+                  "M20.2 18.1l-1.4 1.3-5.5-5.2 1.4-1.3 5.5 5.2zM7.5 12c-2.7 0-4.9-2.1-4.9-4.6s2.2-4.6 4.9-4.6 4.9 2.1 4.9 4.6S10.2 12 7.5 12zM7.5.8C3.7.8.7 3.7.7 7.3s3.1 6.5 6.8 6.5c3.8 0 6.8-2.9 6.8-6.5S11.3.8 7.5.8z",
+                "clip-rule": "evenodd"
+              }
+            })
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.searchTerm,
+            expression: "searchTerm"
+          }
+        ],
+        staticClass:
+          "w-64 mr-6 bg-gray-200 border border-gray-400 pl-8 pr-3 py-1 rounded-full text-sm focus:outline-none focus:border-blue-500 focus:shadow focus:bg-gray-100",
+        attrs: { type: "text", placeholder: "Search...", id: "searchTerm" },
+        domProps: { value: _vm.searchTerm },
+        on: {
+          input: [
+            function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.searchTerm = $event.target.value
+            },
+            _vm.search
+          ],
+          focus: function($event) {
+            _vm.focus = true
+          }
         }
-      ],
-      staticClass:
-        "w-64 mr-6 bg-gray-200 border border-gray-400 pl-8 pr-3 py-1 rounded-full text-sm focus:outline-none focus:border-blue-500 focus:shadow focus:bg-gray-100",
-      attrs: { type: "text", placeholder: "Search...", id: "searchTerm" },
-      domProps: { value: _vm.searchTerm },
-      on: {
-        input: [
-          function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.searchTerm = $event.target.value
-          },
-          _vm.search
-        ]
-      }
-    })
+      }),
+      _vm._v(" "),
+      _vm.focus
+        ? _c(
+            "div",
+            {
+              staticClass:
+                "absolute bg-blue-900 text-white rounded-lg p-4 w-96 right-0 mr-6 mt-3 shadow z-20"
+            },
+            [
+              _vm.results == 0
+                ? _c("div", [
+                    _vm._v(
+                      "No results found for '" + _vm._s(_vm.searchTerm) + "'"
+                    )
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm._l(_vm.results, function(result) {
+                return _c(
+                  "div",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.focus = false
+                      }
+                    }
+                  },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        staticClass: "block py-2",
+                        attrs: { to: result.links.self }
+                      },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "flex items-center" },
+                          [
+                            _c("UserCircle", {
+                              attrs: { name: result.data.name }
+                            }),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "pl-3" }, [
+                              _c("p", [_vm._v(" " + _vm._s(result.data.name))]),
+                              _vm._v(" "),
+                              _c("p", [
+                                _vm._v(" " + _vm._s(result.data.company) + " ")
+                              ])
+                            ])
+                          ],
+                          1
+                        )
+                      ]
+                    )
+                  ],
+                  1
+                )
+              })
+            ],
+            2
+          )
+        : _vm._e()
+    ])
   ])
 }
 var staticRenderFns = []

@@ -14,7 +14,9 @@ class SearchController extends Controller
             'searchTerm' => 'required',
         ]);
 
-        $contacts = Contact::search($data['searchTerm'])->get();
+        $contacts = Contact::search($data['searchTerm'])
+            ->where('user_id', request()->user()->id)
+            ->get();
 
         return ContactResource::collection($contacts);
     }
