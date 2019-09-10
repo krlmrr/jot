@@ -6,6 +6,7 @@ import ContactsCreate from "./views/ContactsCreate.vue";
 import ContactsShow from "./views/ContactsShow.vue";
 import ContactsEdit from "./views/ContactsEdit.vue";
 import BirthdaysIndex from "./views/BirthdaysIndex.vue";
+import Logout from "./actions/Logout.vue";
 
 Vue.use(VueRouter);
 
@@ -29,7 +30,9 @@ export default new VueRouter({
         }, { 
             path : '/birthdays', component : BirthdaysIndex,
             meta : { title: 'This Month\'s Birthdays'} 
-        },
+        },{ 
+            path : '/logout', component : Logout
+        }
     ],
     mode : 'history'
 });
