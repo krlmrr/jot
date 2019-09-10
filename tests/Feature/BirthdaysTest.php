@@ -28,6 +28,15 @@ class BirthdaysTest extends TestCase
         ]);
 
         $this->get('/api/birthdays?api_token=' . $user->api_token)
-            ->assertJsonCount(1);
+            ->assertJsonCount(1)
+            ->assertJson([
+                'data' => [
+                    [
+                        "data" => [
+                            'contact_id' => $birthdayContact->id
+                        ]
+                    ]
+                ]
+            ]);
     }
 }
