@@ -10,8 +10,8 @@ class SearchController extends Controller
 {
     public function index()
     {
-        $data = request()->vaildate([
-            'searchTerm' => 'required'
+        $data = request()->validate([
+            'searchTerm' => 'required',
         ]);
 
         $contacts = Contact::search($data['searchTerm'])->get();
